@@ -1,0 +1,16 @@
+<form class="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+
+    <input
+      matInput
+      placeholder="Enter login to search for"
+      name="query"
+      [(ngModel)]="query"
+    >
+
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <button mat-raised-button>Search</button>
+</form>
+
