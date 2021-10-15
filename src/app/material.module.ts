@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 const modules = [
   MatInputModule,
@@ -13,6 +14,7 @@ const modules = [
   MatButtonModule,
   MatTableModule,
   MatPaginatorModule,
+  MatSortModule,
 ]
 
 @NgModule({

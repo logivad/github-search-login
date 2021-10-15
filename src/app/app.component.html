@@ -5,6 +5,7 @@
 <app-results
   [data]="data"
   [dataCount]="dataTotalCount"
+  [pageIndex]="pageIndex"
   (pageIndexChange)="pageIndex$.next($event)"
   (pageSizeChange)="pageSize$.next($event)"
 ></app-results>

@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IGithubSearchResult, IGithubSearchUsersResult } from 'src/app/interfaces';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IGithubSearchUsersResult } from 'src/app/interfaces';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.scss']
+  styleUrls: ['./results.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResultsComponent {
   @Input()
@@ -13,6 +14,12 @@ export class ResultsComponent {
 
   @Input()
   dataCount = 0;
+  //
+  // @Input()
+  // pageSize = 5;
+
+  @Input()
+  pageIndex = 0;
 
   @Output()
   pageSizeChange = new EventEmitter<number>();
