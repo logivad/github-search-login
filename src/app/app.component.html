@@ -4,8 +4,11 @@
 
 <app-results
   [data]="data"
-  [dataCount]="dataTotalCount"
-  [pageIndex]="pageIndex"
-  (pageIndexChange)="pageIndex$.next($event)"
-  (pageSizeChange)="pageSize$.next($event)"
 ></app-results>
+
+<app-paginator
+  [rowCount]="dataTotalCount"
+  [pageSizeOptions]="[5, 10, 20, 30]"
+  [pageSize]="5"
+  [pageIndexSetter]="pageIndex$"
+></app-paginator>

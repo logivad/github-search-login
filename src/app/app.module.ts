@@ -7,12 +7,14 @@ import { MaterialModule } from 'src/app/material.module';
 import { SearchComponent } from './components/search/search.component';
 import { ResultsComponent } from './components/results/results.component';
 import { FormsModule } from '@angular/forms';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     ResultsComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
