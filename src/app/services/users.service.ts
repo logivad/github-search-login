@@ -12,17 +12,14 @@ export class UsersService {
     private pageSize$ = new Subject<number>();
 
     setQuery(val: string) {
-        console.log('setQuery', val);
         this.query$.next(val);
     }
 
     setPageIndex(val: number) {
-        console.log('setPageIndex', val);
         this.pageIndex$.next(val);
     }
 
     setPageSize(val: number) {
-        console.log('setPageSize', val);
         this.pageSize$.next(val);
     }
 
