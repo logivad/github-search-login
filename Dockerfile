@@ -2,9 +2,9 @@ FROM node:14-stretch
 USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
-COPY --chown=node:node package.json package-lock.json ./
+COPY --chown=node:node package-lock.json ./
 RUN npm ci
-COPY . .
+COPY --chown=node:node . ./
 RUN npm run build:prod
 
 FROM nginx:latest
