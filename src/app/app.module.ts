@@ -8,6 +8,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ResultsComponent } from './components/results/results.component';
 import { FormsModule } from '@angular/forms';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
         BrowserAnimationsModule,
         MaterialModule,
         FormsModule,
+        HttpClientModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

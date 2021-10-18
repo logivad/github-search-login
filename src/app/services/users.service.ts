@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, from, Observable, Subject } from 'rxjs';
+import { combineLatest, from, Observable, of, Subject } from 'rxjs';
 import { Octokit } from '@octokit/core';
-import { distinctUntilChanged, map, switchAll, takeUntil } from 'rxjs/operators';
+import {
+    distinctUntilChanged,
+    map,
+    switchAll,
+    takeUntil,
+    catchError,
+    switchMap,
+} from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -10,6 +18,8 @@ export class UsersService {
     query$ = new Subject<string>();
     pageIndex$ = new Subject<number>();
     pageSize$ = new Subject<number>();
+
+    constructor(public http: HttpClient) {}
 
     setQuery(val: string) {
         this.query$.next(val);
@@ -40,16 +50,18 @@ export class UsersService {
             this.pageIndex$.pipe(distinctUntilChanged()),
             this.pageSize$.pipe(distinctUntilChanged()),
         ]).pipe(
-            map(([query, pageIndex, pageSize]) => {
-                return from(
-                    octokit.request('GET /search/users', {
-                        q: query,
-                        page: pageIndex + 1,
-                        per_page: pageSize,
-                    }).catch(err => err)
-                )
-            }),
-            switchAll()
+            switchMap(([query, pageIndex, pageSize]) => {
+                const q = encodeURIComponent(`${query} in:login`);
+                return this.http
+                    .get(
+                        `https://api.github.com/search/users?q=${q}&page=${pageIndex}&per_page=${pageSize}`
+                    )
+                    .pipe(
+                        catchError((err: HttpErrorResponse) => {
+                            return of(new Error(err.error.message));
+                        })
+                    );
+            })
         );
     }
 }

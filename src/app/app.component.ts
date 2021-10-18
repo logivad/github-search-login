@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
                     if (resp instanceof Error) {
                         this._snackBar.open(resp.message, 'ok');
                     } else {
-                        this.data = resp.data.items;
-                        this.dataTotalCount = resp.data.total_count;
+                        this.data = resp.items;
+                        this.dataTotalCount = resp.total_count;
                         this._changeDetectorRef.markForCheck();
                     }
                 }
