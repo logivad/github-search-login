@@ -9,6 +9,7 @@ import { DestroyService } from 'src/app/services/destroy.service';
 import { UsersService } from 'src/app/services/users.service';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-root',
@@ -27,15 +28,22 @@ export class AppComponent implements OnInit {
         private _destroy$: DestroyService,
         private _usersService: UsersService,
         private _changeDetectorRef: ChangeDetectorRef,
+        private _snackBar: MatSnackBar,
     ) {}
 
     ngOnInit() {
-        this._usersService.getData()
+        this._usersService?.getData()
             .pipe(takeUntil(this._destroy$))
-            .subscribe((resp) => {
-                this.data = resp.data.items;
-                this.dataTotalCount = resp.data.total_count;
-                this._changeDetectorRef.markForCheck();
+            .subscribe({
+                next: (resp) => {
+                    if (resp instanceof Error) {
+                        this._snackBar.open(resp.message, 'ok');
+                    } else {
+                        this.data = resp.data.items;
+                        this.dataTotalCount = resp.data.total_count;
+                        this._changeDetectorRef.markForCheck();
+                    }
+                }
             });
     }
 

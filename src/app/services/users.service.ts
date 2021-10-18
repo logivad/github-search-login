@@ -7,9 +7,9 @@ import { distinctUntilChanged, map, switchAll, takeUntil } from 'rxjs/operators'
     providedIn: 'root',
 })
 export class UsersService {
-    private query$ = new Subject<string>();
-    private pageIndex$ = new Subject<number>();
-    private pageSize$ = new Subject<number>();
+    query$ = new Subject<string>();
+    pageIndex$ = new Subject<number>();
+    pageSize$ = new Subject<number>();
 
     setQuery(val: string) {
         this.query$.next(val);
@@ -24,24 +24,31 @@ export class UsersService {
     }
 
     getData(): Observable<any> {
-        const octokit = new Octokit({
-            auth: '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',
-        });
+        const auth = process.env.NG_APP_OCTOKIT_TOKEN;
+        let octokit: Octokit;
+
+        if (!auth) {
+            octokit = new Octokit({
+                auth: process.env.NG_APP_OCTOKIT_TOKEN,
+            });
+        } else {
+            octokit = new Octokit();
+        }
 
         return combineLatest([
             this.query$.pipe(distinctUntilChanged()),
             this.pageIndex$.pipe(distinctUntilChanged()),
             this.pageSize$.pipe(distinctUntilChanged()),
         ]).pipe(
-            map(([query, pageIndex, pageSize]) =>
-                from(
+            map(([query, pageIndex, pageSize]) => {
+                return from(
                     octokit.request('GET /search/users', {
                         q: query,
                         page: pageIndex + 1,
                         per_page: pageSize,
-                    })
+                    }).catch(err => err)
                 )
-            ),
+            }),
             switchAll()
         );
     }

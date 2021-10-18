@@ -47,7 +47,7 @@ export class PaginatorComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.pageIndexSetter.subscribe((pageIndex: number) => {
+        this.pageIndexSetter?.subscribe((pageIndex: number) => {
             if (Number.isFinite(pageIndex)) {
                 this.pageIndex = pageIndex;
                 this._usersService.setPageIndex(this.pageIndex);
