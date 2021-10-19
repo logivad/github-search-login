@@ -50,14 +50,14 @@ export class PaginatorComponent implements OnInit {
         this.pageIndexSetter?.subscribe((pageIndex: number) => {
             if (Number.isFinite(pageIndex)) {
                 this.pageIndex = pageIndex;
-                this._usersService.setPageIndex(this.pageIndex);
+                this._usersService.setPageIndex(this.pageIndex + 1);
             }
         })
     }
 
     onPaginatorChange(event: PageEvent) {
         this.pageIndex = event.pageIndex;
-        this._usersService.setPageIndex(event.pageIndex);
+        this._usersService.setPageIndex(event.pageIndex + 1);
         this._usersService.setPageSize(event.pageSize);
     }
 }

@@ -1,16 +1,15 @@
 <form class="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline">
+        <input
+            matInput
+            placeholder="Enter login to search for"
+            name="query"
+            [(ngModel)]="query"
+        />
 
-    <input
-      matInput
-      placeholder="Enter login to search for"
-      name="query"
-      [(ngModel)]="query"
-    >
+        <mat-icon *ngIf="!loading" matSuffix>search</mat-icon>
+        <mat-spinner *ngIf="loading" [diameter]="24" matSuffix></mat-spinner>
+    </mat-form-field>
 
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-
-  <button mat-raised-button>Search</button>
+    <button mat-raised-button>Search</button>
 </form>
-

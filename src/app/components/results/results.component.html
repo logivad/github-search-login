@@ -1,4 +1,5 @@
 <table
+    *ngIf="data.length"
     mat-table
     matSort
     (matSortChange)="sortData($event)"

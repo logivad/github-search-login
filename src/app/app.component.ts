@@ -20,9 +20,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AppComponent implements OnInit {
     pageIndex$ = new BehaviorSubject<number>(0);
-
     data: Array<IGithubSearchUsersResult> = [];
     dataTotalCount = 0;
+    loading = false;
+    pristine = true;
 
     constructor(
         private _destroy$: DestroyService,
@@ -32,7 +33,20 @@ export class AppComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._usersService?.getData()
+        this._usersService.loadDataStart$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe(() => {
+                this.loading = true;
+            });
+
+        this._usersService.loadDataEnd$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe(() => {
+                this.loading = false;
+                this.pristine = false;
+            });
+
+        this._usersService.getData()
             .pipe(takeUntil(this._destroy$))
             .subscribe({
                 next: (resp) => {
@@ -41,8 +55,8 @@ export class AppComponent implements OnInit {
                     } else {
                         this.data = resp.items;
                         this.dataTotalCount = resp.total_count;
-                        this._changeDetectorRef.markForCheck();
                     }
+                    this._changeDetectorRef.markForCheck();
                 }
             });
     }

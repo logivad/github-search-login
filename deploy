@@ -1,2 +1,0 @@
-git clone --depth 1 https://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@github.com/logivad/scalio-table.git
-docker build -t scalio-table .

@@ -1,8 +1,9 @@
 <mat-paginator
-  [pageSizeOptions]="pageSizeOptions"
-  [pageSize]="pageSize"
-  [pageIndex]="pageIndex"
-  [length]="rowCount"
-  aria-label="Select page"
-  (page)="onPaginatorChange($event)"
+    *ngIf="rowCount"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [length]="rowCount"
+    aria-label="Select page"
+    (page)="onPaginatorChange($event)"
 ></mat-paginator>

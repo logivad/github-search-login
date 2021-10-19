@@ -1,14 +1,14 @@
-<app-search
-  (queryChange)="onQueryChange($event)"
-></app-search>
+<app-search (queryChange)="onQueryChange($event)" [loading]="loading"></app-search>
 
-<app-results
-  [data]="data"
-></app-results>
+<div *ngIf="!pristine && !data.length">
+    Nothing found
+</div>
+
+<app-results [data]="data"></app-results>
 
 <app-paginator
-  [rowCount]="dataTotalCount"
-  [pageSizeOptions]="[5, 10, 20, 30]"
-  [pageSize]="5"
-  [pageIndexSetter]="pageIndex$"
+    [rowCount]="dataTotalCount"
+    [pageSizeOptions]="[5, 10, 20, 30]"
+    [pageSize]="5"
+    [pageIndexSetter]="pageIndex$"
 ></app-paginator>
